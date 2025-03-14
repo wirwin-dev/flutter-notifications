@@ -1,6 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_notifications/src/home_screen.dart';
 
-void main() => runApp(const MyApp());
+import 'src/controllers/notification_controller.dart';
+
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await NotificationController.initializeNotifications(debug: true);
+  runApp(const MyApp());
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -13,9 +20,7 @@ class MyApp extends StatelessWidget {
         appBar: AppBar(
           title: const Text('Material App Bar'),
         ),
-        body: const Center(
-          child: Text('Hello World'),
-        ),
+        body: const HomeScreen(),
       ),
     );
   }
