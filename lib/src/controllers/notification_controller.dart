@@ -2,19 +2,15 @@ import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
 class NotificationController extends ChangeNotifier {
-  static final NotificationController _instance =
-      NotificationController._internal();
+  final AwesomeNotifications _awesomeNotifications;
 
-  factory NotificationController() {
-    return _instance;
-  }
+  NotificationController({required AwesomeNotifications awesomeNotifications})
+      : _awesomeNotifications = awesomeNotifications;
 
-  NotificationController._internal();
-
-  static Future<void> initializeNotifications({
+  Future<void> initializeNotifications({
     required bool debug,
   }) async {
-    await AwesomeNotifications().initialize(
+    await _awesomeNotifications.initialize(
       null,
       [
         NotificationChannel(

@@ -1,5 +1,6 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
+import 'package:get_it/get_it.dart';
 
 import 'controllers/local_notification.dart';
 
@@ -11,13 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  late final _awesomeNotifications = AwesomeNotifications();
-  late final LocalNotification _localNotification;
+  final _awesomeNotifications = GetIt.instance<AwesomeNotifications>();
+  final _localNotification = GetIt.instance<LocalNotification>();
 
   @override
   void initState() {
-    _localNotification =
-        LocalNotification(awesomeNotifications: _awesomeNotifications);
     _awesomeNotifications.isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
         _awesomeNotifications.requestPermissionToSendNotifications();
