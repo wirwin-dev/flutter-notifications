@@ -1,8 +1,14 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
 
 class LocalNotification {
-  static void triggerDefaultNotification() {
-    AwesomeNotifications().createNotification(
+  const LocalNotification({
+    required AwesomeNotifications awesomeNotifications,
+  }) : _awesomeNotifications = awesomeNotifications;
+
+  final AwesomeNotifications _awesomeNotifications;
+
+  void triggerDefaultNotification() {
+    _awesomeNotifications.createNotification(
       content: NotificationContent(
         id: 0,
         channelKey: 'default_notification',
@@ -15,8 +21,8 @@ class LocalNotification {
     );
   }
 
-  static Future<void> scheduleNotification() async {
-    await AwesomeNotifications().createNotification(
+  Future<void> scheduleNotification() async {
+    await _awesomeNotifications.createNotification(
       content: NotificationContent(
         id: 1,
         channelKey: 'schedule_notification',
@@ -33,7 +39,7 @@ class LocalNotification {
     );
   }
 
-  static Future<void> cancelScheduleNotification(int id) async {
-    await AwesomeNotifications().cancelSchedule(id);
+  Future<void> cancelScheduleNotification(int id) async {
+    await _awesomeNotifications.cancelSchedule(id);
   }
 }

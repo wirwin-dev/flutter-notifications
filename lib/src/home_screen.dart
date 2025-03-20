@@ -11,11 +11,16 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late final _awesomeNotifications = AwesomeNotifications();
+  late final LocalNotification _localNotification;
+
   @override
   void initState() {
-    AwesomeNotifications().isNotificationAllowed().then((isAllowed) {
+    _localNotification =
+        LocalNotification(awesomeNotifications: _awesomeNotifications);
+    _awesomeNotifications.isNotificationAllowed().then((isAllowed) {
       if (!isAllowed) {
-        AwesomeNotifications().requestPermissionToSendNotifications();
+        _awesomeNotifications.requestPermissionToSendNotifications();
       }
     });
     super.initState();
@@ -26,19 +31,19 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       body: Column(
         children: [
-          const ElevatedButton(
-            onPressed: LocalNotification.triggerDefaultNotification,
-            child: Text(
+          ElevatedButton(
+            onPressed: _localNotification.triggerDefaultNotification,
+            child: const Text(
               'Basic notification',
             ),
           ),
           const SizedBox(height: 20),
           Row(
             children: [
-              const Expanded(
+              Expanded(
                 child: ElevatedButton(
-                  onPressed: LocalNotification.scheduleNotification,
-                  child: Text(
+                  onPressed: _localNotification.scheduleNotification,
+                  child: const Text(
                     'Schedule notification',
                   ),
                 ),
@@ -46,7 +51,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ElevatedButton(
                   onPressed: () =>
-                      LocalNotification.cancelScheduleNotification(1),
+                      _localNotification.cancelScheduleNotification(1),
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.purple,
                     foregroundColor: Colors.white,
