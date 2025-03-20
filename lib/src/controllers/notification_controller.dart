@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:awesome_notifications/awesome_notifications.dart';
 import 'package:flutter/material.dart';
 
@@ -44,5 +46,37 @@ class NotificationController extends ChangeNotifier {
       ],
       debug: debug,
     );
+  }
+
+  Future<void> initializeNotificationsEventListeners() async {
+    await _awesomeNotifications.setListeners(
+      onNotificationCreatedMethod: onNotificationCreatedMethod,
+      onActionReceivedMethod: onActionReceivedMethod,
+      onNotificationDisplayedMethod: onNotificationDisplayedMethod,
+      onDismissActionReceivedMethod: onDismissActionReceivedMethod,
+    );
+  }
+
+  Future<void> onNotificationCreatedMethod(
+      ReceivedNotification receivedNotification) async {
+    final isSilentAction = receivedNotification.actionType ==
+            ActionType.SilentAction ||
+        receivedNotification.actionType == ActionType.SilentBackgroundAction;
+
+    log('${isSilentAction ? 'silent action' : 'Action'} notification received');
+  }
+
+  Future<void> onActionReceivedMethod(ReceivedAction receivedAction) async {
+    log('Notification received');
+  }
+
+  Future<void> onNotificationDisplayedMethod(
+      ReceivedNotification receivedNotification) async {
+    log('Notification displayed');
+  }
+
+  Future<void> onDismissActionReceivedMethod(
+      ReceivedAction receivedAction) async {
+    log('Notification dismissed');
   }
 }

@@ -1,4 +1,5 @@
 import 'package:awesome_notifications/awesome_notifications.dart';
+import 'package:flutter/material.dart';
 
 class LocalNotification {
   const LocalNotification({
@@ -18,6 +19,35 @@ class LocalNotification {
             'https://i0.wp.com/codigoespagueti.com/wp-content/uploads/2023/05/Jujutsu-Kaisen-estrena-nuevas-ilustraciones-oficiales-de-su-temporada-2.jpg',
         notificationLayout: NotificationLayout.BigPicture,
       ),
+    );
+  }
+
+  void triggerNotificationWithActionButtons() {
+    _awesomeNotifications.createNotification(
+      content: NotificationContent(
+        id: 2,
+        channelKey: 'default_notification',
+        title: 'Default notification',
+        body: 'This is default notification',
+      ),
+      actionButtons: [
+        NotificationActionButton(
+          key: 'READ',
+          label: 'Mark as read',
+        ),
+        NotificationActionButton(
+          key: 'REPLAY',
+          requireInputText: true,
+          label: 'Replay',
+          color: Colors.green,
+        ),
+        NotificationActionButton(
+          key: 'DISMISS',
+          label: 'Dismiss',
+          actionType: ActionType.Default,
+          isDangerousOption: true,
+        ),
+      ],
     );
   }
 
